@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MPK Admin — Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: [
+                "-apple-system",
+                "BlinkMacSystemFont",
+                '"SF Pro Display"',
+                '"SF Pro Text"',
+                '"Helvetica Neue"',
+                "Arial",
+                "sans-serif",
+              ],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        background: #f5f5f7;
+        -webkit-font-smoothing: antialiased;
+      }
+      .glass {
+        background: rgba(255, 255, 255, 0.62);
+        border: 1px solid rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(30px) saturate(160%);
+        -webkit-backdrop-filter: blur(30px) saturate(160%);
+        box-shadow:
+          0 25px 70px rgba(0, 0, 0, 0.07),
+          inset 0 1px 0 rgba(255, 255, 255, 0.95);
+      }
+    </style>
+    <link rel="stylesheet" href="assets/css/theme.css" />
+  </head>
+  <body
+    class="font-sans text-[#1d1d1f] flex items-center justify-center min-h-screen"
+  >
+    <div class="w-full max-w-md px-5">
+      <div class="text-center mb-8">
+        <h1 class="text-3xl font-bold tracking-tight mb-2">MPK Admin</h1>
+        <p class="text-sm text-gray-500">Masuk untuk mengelola aspirasi.</p>
+      </div>
+
+      <div class="glass rounded-3xl p-8 shadow-sm">
+        <form id="login-form" class="space-y-5">
+          <div>
+            <label class="block text-xs font-semibold text-gray-700 mb-2"
+              >Email</label
+            >
+            <input
+              type="email"
+              id="email"
+              required
+              placeholder="admin@learnly.app"
+              class="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0071e3] transition"
+            />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-gray-700 mb-2"
+              >Kata Sandi</label
+            >
+            <input
+              type="password"
+              id="password"
+              required
+              placeholder="••••••••"
+              class="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0071e3] transition"
+            />
+          </div>
+          <button
+            type="submit"
+            id="login-btn"
+            class="w-full rounded-full bg-[#1d1d1f] text-white px-7 py-3 text-sm font-semibold hover:bg-black transition mt-2"
+          >
+            Masuk
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <script src="assets/js/welcome.js"></script>
+    <script src="assets/js/config.js"></script>
+    <script src="assets/js/supabase.js"></script>
+    <script src="assets/js/ui.js"></script>
+    <script src="assets/js/auth.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        // Check if already logged in
+        await window.Auth.checkSession();
+      });
+
+      document
+        .getElementById("login-form")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const email = document.getElementById("email").value;
+          const password = document.getElementById("password").value;
+
+          window.UI.setButtonLoading("login-btn", true, "Memeriksa...");
+
+          try {
+            const { data, error } = await window.Auth.login(email, password);
+            if (error) throw error;
+
+            // Redirect to admin dashboard
+            window.location.href = "admin.html";
+          } catch (err) {
+            window.UI.showToast(err.message || "Login gagal", "error");
+            window.UI.setButtonLoading("login-btn", false);
+          }
+        });
+    </script>
+  </body>
+</html>

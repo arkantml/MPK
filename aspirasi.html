@@ -1,0 +1,562 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MPK — Sampaikan Aspirasi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: [
+                "-apple-system",
+                "BlinkMacSystemFont",
+                '"SF Pro Display"',
+                '"SF Pro Text"',
+                '"Helvetica Neue"',
+                "Arial",
+                "sans-serif",
+              ],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        background: #f5f5f7;
+        -webkit-font-smoothing: antialiased;
+      }
+      .glass {
+        background: rgba(255, 255, 255, 0.62);
+        border: 1px solid rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(30px) saturate(160%);
+        -webkit-backdrop-filter: blur(30px) saturate(160%);
+        box-shadow:
+          0 25px 70px rgba(0, 0, 0, 0.07),
+          inset 0 1px 0 rgba(255, 255, 255, 0.95);
+      }
+    </style>
+    <link rel="stylesheet" href="assets/css/theme.css" />
+  </head>
+  <body class="font-sans text-[#1d1d1f]">
+    <!-- Navbar -->
+    <header
+      class="fixed top-0 left-0 right-0 z-50 h-[72px] bg-white/60 backdrop-blur-2xl border-b border-black/5"
+    >
+      <div
+        class="max-w-6xl mx-auto h-full px-5 flex items-center justify-between"
+      >
+        <a href="index.html" class="text-xl font-bold tracking-[-.045em]">
+          MPK
+        </a>
+        <nav class="hidden md:flex items-center gap-8 text-xs text-gray-500">
+          <a href="index.html" class="hover:text-black transition">Beranda</a>
+          <a href="status.html" class="hover:text-black transition"
+            >Cek Status</a
+          >
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Form Section -->
+    <section class="pt-32 pb-20 px-5 max-w-3xl mx-auto">
+      <div class="text-center mb-10">
+        <h1 class="text-4xl md:text-5xl font-semibold tracking-tight mb-4">
+          Sampaikan Aspirasi
+        </h1>
+        <p class="text-gray-500 text-sm">
+          Suara Anda penting untuk membangun lingkungan belajar yang lebih baik.
+        </p>
+      </div>
+
+      <div id="class-access-gate" class="glass rounded-3xl p-8 shadow-sm mb-6">
+        <div class="flex items-start gap-3 mb-5">
+          <span class="mpk-lightning text-xl" aria-hidden="true">⚡</span>
+          <div>
+            <h2 class="text-lg font-semibold">Akses kelas</h2>
+            <p class="text-sm text-gray-500 mt-1">
+              Masukkan token rahasia dari wali kelas atau pengurus kelas.
+            </p>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-[.7fr_1fr_auto] gap-3">
+          <select id="class-code" class="rounded-xl px-4 py-3 text-sm">
+            <option value="">Pilih kelas</option>
+            <option>10A</option>
+            <option>10B</option>
+            <option>10C</option>
+            <option>10D</option>
+            <option>10E</option>
+            <option>11A</option>
+            <option>11B</option>
+            <option>11C</option>
+            <option>11D</option>
+            <option>11E</option>
+            <option>12A</option>
+            <option>12B</option>
+            <option>12C</option>
+            <option>12D</option>
+          </select>
+          <input
+            id="class-token"
+            type="password"
+            autocomplete="off"
+            placeholder="Token kelas"
+            class="rounded-xl px-4 py-3 text-sm"
+          />
+          <button
+            id="unlock-form-btn"
+            type="button"
+            class="rounded-xl bg-[#0071e3] text-white px-5 py-3 text-sm font-semibold"
+          >
+            Buka Form
+          </button>
+        </div>
+        <p
+          id="class-access-message"
+          class="hidden text-sm mt-3"
+          role="status"
+        ></p>
+      </div>
+
+      <div id="form-container" class="hidden glass rounded-3xl p-8 shadow-sm">
+        <form id="aspiration-form" class="space-y-6">
+          <!-- Aspiration Type -->
+          <div>
+            <label class="block text-xs font-semibold text-gray-700 mb-2"
+              >Tipe Aspirasi</label
+            >
+            <select
+              id="aspiration-type"
+              required
+              class="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0071e3] focus:border-transparent transition"
+            >
+              <option value="ASPA">ASPA (Aspirasi Akademik / Umum)</option>
+              <option value="ASPI">
+                ASPI (Aspirasi Infrastruktur / Fasilitas)
+              </option>
+            </select>
+          </div>
+
+          <!-- Category -->
+          <div>
+            <label class="block text-xs font-semibold text-gray-700 mb-2"
+              >Kategori Aspirasi</label
+            >
+            <select
+              id="category"
+              required
+              class="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0071e3] focus:border-transparent transition"
+            >
+              <option value="">Pilih kategori...</option>
+              <option value="Pembelajaran">Pembelajaran</option>
+              <option value="Fasilitas">Fasilitas</option>
+              <option value="Teknologi">Teknologi</option>
+              <option value="Lainnya">Lainnya</option>
+            </select>
+          </div>
+
+          <!-- Message -->
+          <div>
+            <div class="flex justify-between items-center mb-2">
+              <label class="block text-xs font-semibold text-gray-700"
+                >Pesan Anda</label
+              >
+              <span id="char-counter" class="text-xs text-gray-400"
+                >0 / 500</span
+              >
+            </div>
+            <textarea
+              id="message"
+              required
+              maxlength="500"
+              rows="5"
+              placeholder="Tuliskan aspirasi atau keluhan Anda secara detail..."
+              class="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0071e3] focus:border-transparent transition resize-none"
+            ></textarea>
+          </div>
+
+          <!-- Anonymous Toggle -->
+          <div
+            class="flex items-center justify-between p-4 bg-gray-50 rounded-xl border border-gray-100"
+          >
+            <div>
+              <h4 class="text-sm font-semibold">Kirim sebagai Anonim</h4>
+              <p class="text-xs text-gray-500 mt-1">
+                Identitas Anda akan disembunyikan dari sistem.
+              </p>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" id="anonymous" class="sr-only peer" />
+              <div
+                class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#34c759]"
+              ></div>
+            </label>
+          </div>
+
+          <!-- Identity Fields -->
+          <div
+            id="identity-section"
+            class="grid grid-cols-1 md:grid-cols-2 gap-4 transition-all duration-300"
+          >
+            <div>
+              <label class="block text-xs font-semibold text-gray-700 mb-2"
+                >Nama Lengkap</label
+              >
+              <input
+                type="text"
+                id="name"
+                placeholder="John Doe"
+                class="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0071e3] transition"
+              />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-gray-700 mb-2"
+                >Email</label
+              >
+              <input
+                type="email"
+                id="email"
+                placeholder="john@example.com"
+                class="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0071e3] transition"
+              />
+            </div>
+            <div class="md:col-span-2">
+              <label class="block text-xs font-semibold text-gray-700 mb-2"
+                >Tipe Identitas</label
+              >
+              <select
+                id="identity-type"
+                class="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0071e3] transition"
+              >
+                <option value="Siswa">Siswa</option>
+                <option value="Guru">Guru</option>
+                <option value="Orang Tua">Orang Tua</option>
+                <option value="Staf">Staf</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Group Token -->
+          <div>
+            <label class="block text-xs font-semibold text-gray-700 mb-2"
+              >KELAS:</label
+            >
+            <input
+              type="text"
+              id="group-token"
+              placeholder="Contoh: KELAS-A"
+              class="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0071e3] transition"
+            />
+            <p class="text-xs text-gray-400 mt-1">
+              Gunakan token untuk menggabungkan aspirasi bersama teman sekelas
+              Anda.
+            </p>
+          </div>
+
+          <!-- Attachment -->
+          <div>
+            <label class="block text-xs font-semibold text-gray-700 mb-2"
+              >Lampiran (Opsional)</label
+            >
+            <input
+              type="file"
+              id="attachment"
+              accept=".pdf,.png,.jpg,.jpeg,.docx"
+              class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-[#0071e3] hover:file:bg-blue-100 transition cursor-pointer"
+            />
+            <p class="mt-1 text-xs text-gray-400">
+              Max 10MB (PDF, PNG, JPG, DOCX)
+            </p>
+          </div>
+
+          <button
+            type="submit"
+            id="submit-btn"
+            class="w-full rounded-full bg-[#0071e3] text-white px-7 py-4 text-sm font-semibold hover:bg-[#0066cc] transition"
+          >
+            Kirim Aspirasi
+          </button>
+        </form>
+      </div>
+
+      <!-- Success View -->
+      <div
+        id="success-view"
+        class="hidden text-center glass rounded-3xl p-10 shadow-sm"
+      >
+        <div
+          class="w-16 h-16 bg-[#34c759]/10 text-[#34c759] rounded-full flex items-center justify-center mx-auto mb-5"
+        >
+          <svg
+            class="w-8 h-8"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M5 13l4 4L19 7"
+            ></path>
+          </svg>
+        </div>
+        <h2 class="text-2xl font-semibold mb-2">Aspirasi Berhasil Dikirim</h2>
+        <p class="text-gray-500 text-sm mb-6">
+          Simpan nomor referensi ini untuk mengecek status aspirasi Anda.
+        </p>
+
+        <div class="bg-gray-100 rounded-xl p-4 mb-4 inline-block">
+          <span
+            class="text-xs text-gray-400 block mb-1 uppercase font-semibold tracking-wider"
+            >Nomor Referensi</span
+          >
+          <span
+            id="ref-number-display"
+            class="text-2xl font-mono font-bold tracking-widest text-[#1d1d1f]"
+            >ASP-XXXXXX</span
+          >
+        </div>
+
+        <div class="flex justify-center mb-6">
+          <button
+            onclick="copyRef()"
+            class="rounded-full bg-white border border-gray-200 px-6 py-3 text-sm font-semibold hover:bg-gray-50 transition flex items-center gap-2"
+          >
+            <svg
+              class="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+              ></path>
+            </svg>
+            Salin Nomor Referensi
+          </button>
+        </div>
+
+        <!-- Warning Message for Ref Code -->
+        <div
+          class="bg-red-50 border border-red-200 text-red-800 rounded-xl p-5 mb-8 text-sm font-semibold max-w-sm mx-auto shadow-sm text-left"
+        >
+          <p class="flex items-center gap-2 mb-2 text-base">
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+              ></path>
+            </svg>
+            PERINGATAN PENTING!
+          </p>
+          <p class="font-normal text-xs mb-4 text-red-700 leading-relaxed">
+            Sistem <strong>tidak menyimpan</strong> nomor referensi ini pada
+            perangkat atau riwayat Anda. Jika Anda kehilangannya, Anda tidak
+            akan bisa melacak status aspirasi Anda di masa depan.
+          </p>
+
+          <label
+            class="flex items-start gap-3 cursor-pointer bg-white p-3 rounded-lg border border-red-100 hover:bg-gray-50 transition"
+          >
+            <input
+              type="checkbox"
+              id="saved-ref-checkbox"
+              class="mt-0.5 w-4 h-4 rounded border-gray-300 text-red-600 focus:ring-red-500"
+            />
+            <span class="text-xs text-red-800 font-medium"
+              >Saya mengerti dan sudah menyalin/menyimpan nomor referensi di
+              atas dengan baik.</span
+            >
+          </label>
+        </div>
+
+        <div
+          class="flex flex-col sm:flex-row gap-3 justify-center opacity-50 pointer-events-none transition-all duration-300"
+          id="success-actions"
+        >
+          <a
+            href="status.html"
+            class="rounded-full bg-[#0071e3] text-white px-6 py-3 text-sm font-semibold hover:bg-[#0066cc] transition"
+            >Cek Status Aspirasi</a
+          >
+          <button
+            onclick="location.reload()"
+            class="rounded-full bg-transparent text-gray-500 px-6 py-3 text-sm font-semibold hover:bg-gray-100 transition"
+          >
+            Kirim Aspirasi Baru
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Scripts -->
+    <script src="assets/js/config.js"></script>
+    <script src="assets/js/supabase.js"></script>
+    <script src="assets/js/ui.js"></script>
+    <script src="assets/js/access.js"></script>
+    <script src="assets/js/aspiration.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const accessGate = document.getElementById("class-access-gate");
+        const formContainer = document.getElementById("form-container");
+        const classCode = document.getElementById("class-code");
+        const classToken = document.getElementById("class-token");
+        const unlockButton = document.getElementById("unlock-form-btn");
+        const accessMessage = document.getElementById("class-access-message");
+
+        const showAccessMessage = (message, isError = false) => {
+          accessMessage.textContent = message;
+          accessMessage.className = `text-sm mt-3 ${isError ? "text-red-300" : "text-green-300"}`;
+        };
+
+        unlockButton.addEventListener("click", async () => {
+          if (!classCode.value || !classToken.value) {
+            showAccessMessage(
+              "Pilih kelas dan masukkan token terlebih dahulu.",
+              true,
+            );
+            return;
+          }
+          unlockButton.disabled = true;
+          unlockButton.textContent = "Memeriksa...";
+          try {
+            const verified = await window.ClassAccess.verify(
+              classCode.value,
+              classToken.value,
+            );
+            if (!verified) {
+              showAccessMessage("Token salah atau form sedang ditutup.", true);
+              return;
+            }
+            accessGate.classList.add("hidden");
+            formContainer.classList.remove("hidden");
+          } catch (error) {
+            showAccessMessage("Akses belum dapat diperiksa. Coba lagi.", true);
+            console.error(error);
+          } finally {
+            unlockButton.disabled = false;
+            unlockButton.textContent = "Buka Form";
+          }
+        });
+
+        const form = document.getElementById("aspiration-form");
+        const msgInput = document.getElementById("message");
+        const charCounter = document.getElementById("char-counter");
+        const anonToggle = document.getElementById("anonymous");
+        const idSection = document.getElementById("identity-section");
+        const nameInput = document.getElementById("name");
+        const emailInput = document.getElementById("email");
+
+        const savedRefCheckbox = document.getElementById("saved-ref-checkbox");
+        const successActions = document.getElementById("success-actions");
+
+        if (savedRefCheckbox) {
+          savedRefCheckbox.addEventListener("change", (e) => {
+            if (e.target.checked) {
+              successActions.classList.remove(
+                "opacity-50",
+                "pointer-events-none",
+              );
+            } else {
+              successActions.classList.add("opacity-50", "pointer-events-none");
+            }
+          });
+        }
+
+        // Char counter
+        msgInput.addEventListener("input", () => {
+          charCounter.textContent = `${msgInput.value.length} / 500`;
+        });
+
+        // Anonymous toggle logic
+        anonToggle.addEventListener("change", (e) => {
+          if (e.target.checked) {
+            idSection.style.opacity = "0.5";
+            idSection.style.pointerEvents = "none";
+            nameInput.required = false;
+            emailInput.required = false;
+          } else {
+            idSection.style.opacity = "1";
+            idSection.style.pointerEvents = "auto";
+            nameInput.required = true;
+            emailInput.required = true;
+          }
+        });
+
+        // Initial state
+        nameInput.required = true;
+        emailInput.required = true;
+
+        // Form submit
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const submitBtn = document.getElementById("submit-btn");
+          window.UI.setButtonLoading("submit-btn", true, "Mengirim...");
+
+          try {
+            const formData = {
+              aspirationType: document.getElementById("aspiration-type").value,
+              groupToken: document.getElementById("group-token").value,
+              category: document.getElementById("category").value,
+              message: msgInput.value,
+              anonymous: anonToggle.checked,
+              name: nameInput.value,
+              email: emailInput.value,
+              identityType: document.getElementById("identity-type").value,
+              file: document.getElementById("attachment").files[0],
+            };
+
+            const accessSession = window.ClassAccess.getSession();
+            if (!accessSession)
+              throw new Error(
+                "Akses kelas sudah tidak tersedia. Silakan masukkan token kembali.",
+              );
+            formData.classCode = accessSession.classCode;
+            formData.accessTokenHash = accessSession.tokenHash;
+
+            const refNum = await window.Aspiration.submit(formData);
+
+            document.getElementById("form-container").classList.add("hidden");
+            document.getElementById("success-view").classList.remove("hidden");
+            document.getElementById("ref-number-display").textContent = refNum;
+
+            window.UI.showToast("Aspirasi berhasil dikirim!");
+          } catch (err) {
+            window.UI.showToast(
+              err.message || "Terjadi kesalahan saat mengirim",
+              "error",
+            );
+          } finally {
+            window.UI.setButtonLoading("submit-btn", false);
+          }
+        });
+      });
+
+      function copyRef() {
+        const text = document.getElementById("ref-number-display").textContent;
+        navigator.clipboard.writeText(text).then(() => {
+          window.UI.showToast("Nomor referensi disalin!");
+        });
+      }
+    </script>
+    <script src="assets/js/welcome.js"></script>
+  </body>
+</html>
