@@ -70,10 +70,6 @@
   </head>
 
   <body class="font-sans page-bg min-h-screen text-[#1d1d1f]">
-    <!-- =========================
-     NAVBAR
-========================= -->
-
     <header
       class="fixed top-0 left-0 right-0 z-50 h-[70px] bg-white/60 backdrop-blur-2xl border-b border-black/5"
     >
@@ -88,16 +84,8 @@
       </div>
     </header>
 
-    <!-- =========================
-     MAIN
-========================= -->
-
     <main class="min-h-screen pt-28 pb-16 px-5">
       <div class="max-w-3xl mx-auto">
-        <!-- =====================
-         INTRO
-    ====================== -->
-
         <div class="text-center mb-10">
           <div
             class="inline-flex items-center gap-2 rounded-full bg-white/70 border border-white px-4 py-2 text-xs text-gray-500 mb-5"
@@ -122,15 +110,7 @@
           </p>
         </div>
 
-        <!-- =====================
-         FORM CARD
-    ====================== -->
-
         <form id="aspirationForm" class="glass rounded-[32px] p-5 md:p-8">
-          <!-- ==================
-           CATEGORY
-      =================== -->
-
           <div>
             <div class="mb-3">
               <label class="text-sm font-semibold"> Tentang apa? </label>
@@ -185,10 +165,6 @@
             <input type="hidden" id="category" name="category" />
           </div>
 
-          <!-- ==================
-           ASPIRATION
-      =================== -->
-
           <div class="mt-8">
             <div class="flex justify-between items-end mb-3">
               <div>
@@ -216,10 +192,6 @@
               class="w-full min-h-[190px] resize-none rounded-[22px] bg-white/75 border border-black/5 px-5 py-5 text-sm leading-relaxed outline-none placeholder:text-gray-300 focus:border-[#0071e3]/40 focus:ring-4 focus:ring-[#0071e3]/10 transition"
             ></textarea>
           </div>
-
-          <!-- ==================
-           NAME
-      =================== -->
 
           <div class="mt-8">
             <div class="mb-3">
@@ -251,10 +223,6 @@
             </div>
           </div>
 
-          <!-- ==================
-           ANONYMOUS
-      =================== -->
-
           <div
             class="mt-5 flex items-center justify-between rounded-2xl bg-black/[.025] border border-black/5 px-4 py-4"
           >
@@ -278,10 +246,6 @@
               ></div>
             </label>
           </div>
-
-          <!-- ==================
-           ATTACHMENT
-      =================== -->
 
           <div class="mt-5">
             <label
@@ -309,10 +273,6 @@
             </label>
           </div>
 
-          <!-- ==================
-           SUBMIT
-      =================== -->
-
           <div
             class="mt-8 pt-6 border-t border-black/5 flex flex-col-reverse sm:flex-row sm:items-center justify-between gap-4"
           >
@@ -336,10 +296,6 @@
           </div>
         </form>
 
-        <!-- =====================
-         TRUST MESSAGE
-    ====================== -->
-
         <div
           class="mt-6 flex items-center justify-center gap-2 text-[10px] text-gray-400"
         >
@@ -349,10 +305,6 @@
         </div>
       </div>
     </main>
-
-    <!-- =========================
-     SUCCESS MODAL
-========================= -->
 
     <div
       id="success"
@@ -384,10 +336,6 @@
     </div>
 
     <script>
-      /* =========================
-     CATEGORY
-  ========================= */
-
       function chooseCategory(element, value) {
         document.querySelectorAll(".category").forEach((item) => {
           item.classList.remove("active");
@@ -398,10 +346,6 @@
         document.getElementById("category").value = value;
       }
 
-      /* =========================
-     CHARACTER COUNTER
-  ========================= */
-
       const message = document.getElementById("message");
 
       const counter = document.getElementById("counter");
@@ -409,10 +353,6 @@
       message.addEventListener("input", () => {
         counter.textContent = `${message.value.length} / 500`;
       });
-
-      /* =========================
-     SUBMIT
-  ========================= */
 
       document
         .getElementById("aspirationForm")
@@ -431,10 +371,6 @@
 
           document.getElementById("success").classList.add("flex");
         });
-
-      /* =========================
-     CLOSE SUCCESS
-  ========================= */
 
       function closeSuccess() {
         document.getElementById("success").classList.add("hidden");
