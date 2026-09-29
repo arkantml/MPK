@@ -1,7 +1,7 @@
 const APP_CONFIG = {
   SUPABASE_URL: 'https://qtqpgpgihmybihiznakv.supabase.co',
   SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF0cXBncGdpaG15YmloaXpuYWt2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk0NjM3MTUsImV4cCI6MjEwNTAzOTcxNX0.1ZgbXqUv-yZVvDuJfCymmjJ5wbwIfNaMbanlUvWgr5E',
-  MAX_FILE_SIZE: 10 * 1024 * 1024, // 10MB
+  MAX_FILE_SIZE: 10 * 1024 * 1024,
   ALLOWED_FILE_TYPES: ['application/pdf', 'image/png', 'image/jpeg', 'image/jpg', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'],
   STATUS_COLORS: {
     'NEW': 'bg-blue-100 text-blue-800',

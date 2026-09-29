@@ -1,5 +1,4 @@
 const Auth = {
-  // Login admin
   login: async (email, password) => {
     const supabase = window.getSupabaseClient();
     if (!supabase) return { error: { message: 'Supabase not initialized' } };
@@ -12,7 +11,6 @@ const Auth = {
     return { data, error };
   },
 
-  // Logout admin
   logout: async () => {
     const supabase = window.getSupabaseClient();
     if (!supabase) return;
@@ -20,7 +18,6 @@ const Auth = {
     window.location.href = 'admin-login.html';
   },
 
-  // Check session and route guard
   checkSession: async (requireAuth = false, redirectUrl = 'admin-login.html') => {
     const supabase = window.getSupabaseClient();
     if (!supabase) return null;
@@ -32,7 +29,6 @@ const Auth = {
       return null;
     }
     
-    // If logged in and on login page, redirect to admin
     if (session && window.location.pathname.includes('admin-login.html')) {
         window.location.href = 'admin.html';
     }

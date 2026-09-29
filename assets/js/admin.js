@@ -42,7 +42,6 @@ const Admin = {
     return true;
   },
 
-  // Fetch dashboard metrics
   getMetrics: async () => {
     const supabase = window.getSupabaseClient();
     if (!supabase) return null;
@@ -76,7 +75,6 @@ const Admin = {
     return metrics;
   },
 
-  // Fetch all aspirations for table
   getAspirations: async (filters = {}) => {
     const supabase = window.getSupabaseClient();
     if (!supabase) return null;
@@ -99,7 +97,6 @@ const Admin = {
     return data;
   },
 
-  // Update aspiration status
   updateStatus: async (id, status) => {
     const supabase = window.getSupabaseClient();
     if (!supabase) return null;
@@ -111,12 +108,10 @@ const Admin = {
 
     if (error) throw error;
 
-    // Log activity
     await Admin.logActivity(id, `Status updated to ${status}`);
     return true;
   },
 
-  // Add a note
   addNote: async (aspirationId, note) => {
     const supabase = window.getSupabaseClient();
     const session = await Auth.checkSession();
@@ -134,7 +129,6 @@ const Admin = {
     return true;
   },
 
-  // Get notes for an aspiration
   getNotes: async (aspirationId) => {
     const supabase = window.getSupabaseClient();
     if (!supabase) return [];
@@ -149,7 +143,6 @@ const Admin = {
     return data;
   },
 
-  // Log activity (internal)
   logActivity: async (aspirationId, action, metadata = {}) => {
     const supabase = window.getSupabaseClient();
     const session = await Auth.checkSession();

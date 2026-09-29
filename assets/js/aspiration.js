@@ -287,16 +287,13 @@ const Analyzers = {
 window.Analyzers = Analyzers;
 
 const Aspiration = {
-  // Submit new aspiration
   submit: async (formData) => {
     const supabase = window.getSupabaseClient();
     if (!supabase) throw new Error("Database connection failed");
 
-    // Toxic Filter Check
     const analysis = Analyzers.analyze(formData.message);
     const isToxic = analysis.isToxic;
     if (isToxic) {
-      // You can either block it completely, or flag it. The requirement says filter, so we block.
       throw new Error(
         "Pesan Anda mengandung kata-kata yang tidak pantas (Toxic). Mohon perbaiki bahasa Anda.",
       );
@@ -304,7 +301,6 @@ const Aspiration = {
 
     const sentiment = analysis.sentiment;
 
-    // Handle file upload if exists
     let attachmentUrl = null;
     let attachmentName = null;
 
@@ -334,7 +330,6 @@ const Aspiration = {
       attachmentName = file.name;
     }
 
-    // Insert to database
     const { data, error } = await supabase
       .from("aspirations")
       .insert([
@@ -362,7 +357,6 @@ const Aspiration = {
     return data.reference_number;
   },
 
-  // Lookup status
   lookup: async (referenceNumber) => {
     const supabase = window.getSupabaseClient();
     if (!supabase) throw new Error("Database connection failed");
@@ -374,7 +368,7 @@ const Aspiration = {
       .single();
 
     if (error) {
-      if (error.code === "PGRST116") return null; // Not found
+      if (error.code === "PGRST116") return null;
       throw error;
     }
     return data;

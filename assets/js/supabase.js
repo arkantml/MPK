@@ -1,9 +1,7 @@
-// Initialize Supabase client
 let supabaseClient = null;
 
 function initSupabase() {
   if (window.APP_CONFIG.SUPABASE_URL && window.APP_CONFIG.SUPABASE_ANON_KEY) {
-    // Only init if the Supabase library is loaded
     if (typeof supabase !== 'undefined') {
       supabaseClient = supabase.createClient(
         window.APP_CONFIG.SUPABASE_URL,
@@ -18,7 +16,6 @@ function initSupabase() {
   }
 }
 
-// Automatically init if ready
 document.addEventListener('DOMContentLoaded', () => {
   initSupabase();
 });

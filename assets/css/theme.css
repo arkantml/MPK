@@ -223,7 +223,6 @@ input[type="file"]::file-selector-button {
   cursor: pointer;
 }
 
-/* Admin dashboard controls need translucent accents, not the public gold fill. */
 #admin-body > div > main > header {
   background: rgba(8, 8, 8, 0.72) !important;
   border-bottom: 1px solid rgba(244, 197, 66, 0.18) !important;

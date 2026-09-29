@@ -1,5 +1,4 @@
 const UI = {
-  // Safe text injection to prevent XSS
   safeText: (elementId, text) => {
     const el = document.getElementById(elementId);
     if (el) {
@@ -7,9 +6,7 @@ const UI = {
     }
   },
 
-  // Toast notifications
   showToast: (message, type = 'success') => {
-    // Create toast container if it doesn't exist
     let container = document.getElementById('toast-container');
     if (!container) {
       container = document.createElement('div');
@@ -28,12 +25,10 @@ const UI = {
 
     container.appendChild(toast);
 
-    // Animate in
     setTimeout(() => {
       toast.classList.remove('translate-y-10', 'opacity-0');
     }, 10);
 
-    // Animate out and remove
     setTimeout(() => {
       toast.classList.add('translate-y-10', 'opacity-0');
       setTimeout(() => {
@@ -42,7 +37,6 @@ const UI = {
     }, 3000);
   },
 
-  // Date formatting
   formatDate: (dateString) => {
     if (!dateString) return '-';
     const date = new Date(dateString);
@@ -55,7 +49,6 @@ const UI = {
     });
   },
 
-  // Button loading state
   setButtonLoading: (buttonId, isLoading, originalText = '') => {
     const btn = document.getElementById(buttonId);
     if (!btn) return;

@@ -97,7 +97,6 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", async () => {
-        // Check if already logged in
         await window.Auth.checkSession();
       });
 
@@ -114,7 +113,6 @@
             const { data, error } = await window.Auth.login(email, password);
             if (error) throw error;
 
-            // Redirect to admin dashboard
             window.location.href = "admin.html";
           } catch (err) {
             window.UI.showToast(err.message || "Login gagal", "error");

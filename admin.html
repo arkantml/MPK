@@ -52,8 +52,7 @@
         color: #f5f5f5;
       }
 
-      /* Dark glass sidebar */
-      .sidebar-glass {
+            .sidebar-glass {
         background: linear-gradient(
           180deg,
           rgba(20, 20, 20, 0.95) 0%,
@@ -63,8 +62,7 @@
         box-shadow: inset -1px 0 0 rgba(234, 179, 8, 0.06);
       }
 
-      /* Gold glass cards */
-      .card-dark {
+            .card-dark {
         background: rgba(20, 20, 20, 0.85);
         border: 1px solid rgba(234, 179, 8, 0.1);
         backdrop-filter: blur(20px);
@@ -85,8 +83,7 @@
         scrollbar-width: none;
       }
 
-      /* Stat card styles */
-      .stat-card {
+            .stat-card {
         background: rgba(20, 20, 20, 0.9);
         border-radius: 1rem;
         padding: 1.25rem;
@@ -122,8 +119,7 @@
         background: linear-gradient(90deg, #f43f5e, #fb7185);
       }
 
-      /* Entrance animation */
-      @keyframes fadeSlideUp {
+            @keyframes fadeSlideUp {
         from {
           opacity: 0;
           transform: translateY(12px);
@@ -150,8 +146,7 @@
         animation-delay: 0.21s;
       }
 
-      /* Admin avatar */
-      .admin-avatar {
+            .admin-avatar {
         width: 36px;
         height: 36px;
         border-radius: 50%;
@@ -165,8 +160,7 @@
         flex-shrink: 0;
       }
 
-      /* Pulse dot */
-      .pulse-dot {
+            .pulse-dot {
         width: 8px;
         height: 8px;
         background: #34c759;
@@ -186,8 +180,7 @@
         }
       }
 
-      /* Gold accent scrollbar for main content */
-      .gold-scroll::-webkit-scrollbar {
+            .gold-scroll::-webkit-scrollbar {
         width: 6px;
       }
       .gold-scroll::-webkit-scrollbar-track {
@@ -201,21 +194,18 @@
         background: rgba(234, 179, 8, 0.5);
       }
 
-      /* Table row hover */
-      .table-row-dark:hover {
+            .table-row-dark:hover {
         background: rgba(234, 179, 8, 0.04);
       }
 
-      /* Chart container */
-      .chart-container {
+            .chart-container {
         background: rgba(20, 20, 20, 0.9);
         border: 1px solid rgba(255, 255, 255, 0.06);
         border-radius: 1rem;
         padding: 1.5rem;
       }
 
-      /* Gold glow effect */
-      .gold-glow {
+            .gold-glow {
         box-shadow:
           0 0 60px rgba(234, 179, 8, 0.08),
           0 0 120px rgba(234, 179, 8, 0.04);
@@ -224,11 +214,9 @@
   </head>
   <body class="font-sans hidden" id="admin-body">
     <div class="flex h-screen overflow-hidden">
-      <!-- Sidebar -->
-      <aside class="w-64 sidebar-glass flex flex-col justify-between p-6">
+            <aside class="w-64 sidebar-glass flex flex-col justify-between p-6">
         <div>
-          <!-- Logo -->
-          <div class="mb-8 flex items-center gap-3">
+                    <div class="mb-8 flex items-center gap-3">
             <img
               src="assets/img/logo-mpk.png"
               alt="Logo MPK"
@@ -405,8 +393,7 @@
           </div>
         </div>
 
-        <!-- Admin Profile Footer -->
-        <div class="border-t border-white/5 pt-4">
+                <div class="border-t border-white/5 pt-4">
           <div class="flex items-center gap-3 mb-3">
             <div class="admin-avatar" id="admin-avatar">A</div>
             <div class="min-w-0">
@@ -444,10 +431,8 @@
         </div>
       </aside>
 
-      <!-- Main Content -->
-      <main class="flex-1 flex flex-col h-screen overflow-hidden">
-        <!-- Topbar -->
-        <header
+            <main class="flex-1 flex flex-col h-screen overflow-hidden">
+                <header
           class="h-20 flex items-center justify-between px-8 bg-black/40 backdrop-blur-md border-b border-white/5"
         >
           <div>
@@ -508,10 +493,8 @@
           </div>
         </header>
 
-        <!-- Content Area -->
-        <div class="flex-1 overflow-auto p-8 gold-scroll">
-          <!-- Stat Cards -->
-          <div class="grid grid-cols-4 gap-4 mb-6" id="stat-cards">
+                <div class="flex-1 overflow-auto p-8 gold-scroll">
+                    <div class="grid grid-cols-4 gap-4 mb-6" id="stat-cards">
             <div class="stat-card gold animate-in">
               <div class="flex items-center justify-between mb-3">
                 <div
@@ -643,8 +626,7 @@
             </div>
           </div>
 
-          <!-- Charts Row -->
-          <div class="grid grid-cols-2 gap-4 mb-6">
+                    <div class="grid grid-cols-2 gap-4 mb-6">
             <div class="chart-container animate-in">
               <div class="flex items-center justify-between mb-4">
                 <h3 class="text-sm font-semibold text-gray-300">
@@ -678,8 +660,7 @@
             </div>
           </div>
 
-          <!-- Table -->
-          <div class="card-dark overflow-hidden gold-glow">
+                    <div class="card-dark overflow-hidden gold-glow">
             <table class="w-full text-left border-collapse">
               <thead>
                 <tr
@@ -706,8 +687,7 @@
       </main>
     </div>
 
-    <!-- Modal -->
-    <div
+        <div
       id="detail-modal"
       class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4"
     >
@@ -854,8 +834,7 @@
           </div>
 
           <div id="notes-list" class="space-y-3 mt-4">
-            <!-- Notes dynamically injected -->
-          </div>
+                      </div>
         </div>
       </div>
     </div>
@@ -873,7 +852,6 @@
       let sentimentChartInstance = null;
       let categoryChartInstance = null;
 
-      // Chart.js global dark defaults
       Chart.defaults.color = "#6b7280";
       Chart.defaults.borderColor = "rgba(255,255,255,0.05)";
 
@@ -993,7 +971,6 @@
         el.classList.remove("text-gray-400", "hover:bg-white/5");
       }
 
-      // --- CHARTS ---
       function renderSentimentChart(positive, negative) {
         const ctx = document.getElementById("sentimentChart").getContext("2d");
         const neutral = Math.max(0, positive + negative > 0 ? 0 : 1);
@@ -1037,7 +1014,6 @@
       function renderCategoryChart(data) {
         const ctx = document.getElementById("categoryChart").getContext("2d");
 
-        // Count categories
         const cats = {};
         (data || []).forEach((item) => {
           cats[item.category] = (cats[item.category] || 0) + 1;
@@ -1134,7 +1110,6 @@
             document.getElementById("pct-negative").textContent = pctNeg + "%";
             document.getElementById("bar-negative").style.width = pctNeg + "%";
 
-            // Render sentiment chart
             renderSentimentChart(metrics.positive, metrics.negative);
           }
           await loadTable();
@@ -1178,7 +1153,6 @@
             return;
           }
 
-          // Render category chart with data
           renderCategoryChart(data);
 
           data.forEach((item) => {
