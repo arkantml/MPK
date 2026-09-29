@@ -229,6 +229,17 @@ const Analyzers = {
     ).test(text);
   },
 
+  containsBlockedVariant: (text, term) => {
+    const letters = Array.from(Analyzers.normalize(term));
+    if (letters.length === 0) return false;
+
+    const pattern = letters
+      .map((letter) => `${letter.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}+`)
+      .join("\\s*");
+
+    return new RegExp(`(^|\\s)${pattern}(?=\\s|$)`, "u").test(text);
+  },
+
   checkToxicity: (text) => {
     const normalizedText = Analyzers.normalize(text);
     return (
@@ -236,7 +247,7 @@ const Analyzers = {
         normalizedText.includes(Analyzers.normalize(phrase)),
       ) ||
       Analyzers.blockedWords.some((word) =>
-        Analyzers.containsTerm(normalizedText, word),
+        Analyzers.containsBlockedVariant(normalizedText, word),
       )
     );
   },
